@@ -108,12 +108,12 @@ namespace Bingo {
             XFont fontS = new XFont("verdana", REC_SIZE * .3);
 
             XBrush[] brs = {
-                 new XSolidBrush(XColor.FromArgb(255, 1, 137, 133)),
+                 new XSolidBrush(XColor.FromArgb(255, 15, 159, 255)),
                  new XSolidBrush(XColor.FromArgb(255, 25, 214, 182)),
                  new XSolidBrush(XColor.FromArgb(255, 153, 255, 50)),
                  new XSolidBrush(XColor.FromArgb(255, 254, 131, 54)),
                  new XSolidBrush(XColor.FromArgb(255, 229, 54, 0)),
-                 new XSolidBrush(XColor.FromArgb(255, 34, 64, 100))
+                 new XSolidBrush(XColor.FromArgb(255, 34, 64, 80))
             };
 
             int pageCount = (int)Math.Ceiling((double)(cards.Count / 12.0));
@@ -123,7 +123,7 @@ namespace Bingo {
                 document.AddPage();
                 XGraphics gfx = XGraphics.FromPdfPage(document.Pages[page]);
 
-                XUnitPt startY = 60;
+                XUnitPt startY = 70;
 
                 for (int rowsOnPage = 0; rowsOnPage < 4; rowsOnPage++) {
 
@@ -138,14 +138,14 @@ namespace Bingo {
                         for (int r = 0; r < 5; r++) {
                             XUnitPt x = startX + REC_SIZE * r + r * MARGIN, y = startY - REC_SIZE - 2;
                             XRect rect = new XRect(x, y, REC_SIZE, REC_SIZE);
-                            gfx.DrawRectangle(brs[r], rect);
-                            gfx.DrawRectangle(XPens.Black, rect);
+                            gfx.DrawRoundedRectangle(brs[r], rect, new XSize(2, 2));
+                            gfx.DrawRoundedRectangle(XPens.Black, rect, new XSize(2, 2));
                             gfx.DrawString(bingo[r].ToString(), fontN, brs[5], rect, XStringFormats.Center);
                         }
 
                         // output big rectangle around card
                         XRect bigRect = new XRect(startX - BIG_RECT_MARGIN, startY - BIG_RECT_MARGIN - REC_SIZE - 2, TOT_WID + 2 * BIG_RECT_MARGIN, TOT_WID + REC_SIZE + MARGIN + 2 * BIG_RECT_MARGIN);
-                        gfx.DrawRectangle(XPens.Black, bigRect);
+                        gfx.DrawRoundedRectangle(XPens.Black, bigRect, new XSize(2, 2));
 
                         // output card
                         Card card = cards[o];
@@ -156,7 +156,7 @@ namespace Bingo {
                                 XUnitPt x = startX + REC_SIZE * c + c * MARGIN, y = startY + REC_SIZE * r + r * MARGIN;
                                 XRect rect = new XRect(x, y, REC_SIZE, REC_SIZE);
 
-                                gfx.DrawRectangle(XPens.Black, rect);
+                                gfx.DrawRoundedRectangle(XPens.Black, rect, new XSize(2, 2));
 
                                 if(c == 2 && r == 2) {
                                     gfx.DrawString("FREE", fontS, XBrushes.Black, rect, XStringFormats.Center);
