@@ -10,6 +10,7 @@ namespace Bingo {
     class Program {
 
         static List<Card> cards = new List<Card>();
+        static private Random rand = new Random();
 
         public class Card {
 
@@ -39,12 +40,6 @@ namespace Bingo {
         }
 
         class BingoCard {
-
-            private Random rand;
-
-            public BingoCard() {
-                rand = new Random();
-            }
 
             private byte[] getHash(string str) {
                 using (HashAlgorithm algorithm = HMACSHA1.Create())
@@ -156,15 +151,15 @@ namespace Bingo {
                                 XUnitPt x = startX + REC_SIZE * c + c * MARGIN, y = startY + REC_SIZE * r + r * MARGIN;
                                 XRect rect = new XRect(x, y, REC_SIZE, REC_SIZE);
 
-                                gfx.DrawRoundedRectangle(XPens.Black, rect, new XSize(2, 2));
-
                                 if(c == 2 && r == 2) {
+                                    gfx.DrawRoundedRectangle(brs[rand.Next(5)], rect, new XSize(2, 2));
                                     gfx.DrawString("FREE", fontS, XBrushes.Black, rect, XStringFormats.Center);
 
                                 } else {
                                     gfx.DrawString(card.card[c, r].ToString(), font, XBrushes.Black, rect, XStringFormats.Center);
-
                                 }
+
+                                gfx.DrawRoundedRectangle(XPens.Black, rect, new XSize(2, 2));
 
                             }
 
